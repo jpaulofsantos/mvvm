@@ -15,6 +15,12 @@ class MainViewModel: ViewModel() {
     private var personRepository: PersonRepository = PersonRepository()
     private var checkBox = MutableLiveData<Boolean>()
 
+    private var textWelcome2 = MutableLiveData<String>().apply {
+        value = "Login Screen 2"
+    }
+
+    var newTextWelcome: LiveData<String> = textWelcome2
+
     //setando um valor teste para a variável textWelcome
     init {
         textWelcome.value = "Login Screen!"

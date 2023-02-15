@@ -65,5 +65,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 binding.checkBox1.text = "Desmarcado"
             }
         })
+
+        mainViewModel.newTextWelcome.observe(this, Observer {
+            binding.tv2.text = it
+        })
     }
 }
