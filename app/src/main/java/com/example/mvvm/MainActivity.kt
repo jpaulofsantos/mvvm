@@ -36,9 +36,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             val email = binding.etEmail.text.toString()
             val senha = binding.etSenha.text.toString()
             val isChecked = binding.checkBox1.isChecked
+            //val btnStrChange = "NEW BTN"
 
             mainViewModel.doLogin(email, senha)
             mainViewModel.analyseCheckBox(isChecked)
+            mainViewModel.changeBtn(email)
         }
     }
 
@@ -68,6 +70,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         mainViewModel.newTextWelcome.observe(this, Observer {
             binding.tv2.text = it
+        })
+
+        mainViewModel.textBtn.observe(this, Observer {
+            binding.btnLoginNew.text = it
+        })
+
+        mainViewModel.btn().observe(this, Observer {
+            binding.btnLoginNew.text = it
         })
     }
 }

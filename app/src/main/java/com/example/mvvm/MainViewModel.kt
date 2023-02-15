@@ -14,6 +14,14 @@ class MainViewModel: ViewModel() {
     private var login = MutableLiveData<Boolean>()
     private var personRepository: PersonRepository = PersonRepository()
     private var checkBox = MutableLiveData<Boolean>()
+    private var strBtn = MutableLiveData<String>()
+
+    private var textBtnNew = MutableLiveData<String>().apply {
+        value = "Live Data"
+    }
+
+    var textBtn: LiveData<String> = textBtnNew
+
 
     private var textWelcome2 = MutableLiveData<String>().apply {
         value = "Login Screen 2"
@@ -31,6 +39,7 @@ class MainViewModel: ViewModel() {
         return textWelcome
     }
 
+    //observer
     fun login(): LiveData<Boolean> {
         return login
     }
@@ -39,11 +48,21 @@ class MainViewModel: ViewModel() {
         login.value = personRepository.login(email, senha)
     }
 
+    //observer
     fun checkBox(): LiveData<Boolean> {
         return checkBox
     }
 
     fun analyseCheckBox(checked: Boolean) {
         checkBox.value = checked
+    }
+
+    //observer
+    fun btn(): LiveData<String> {
+        return strBtn
+    }
+
+    fun changeBtn(str: String) {
+        strBtn.value = str
     }
 }
