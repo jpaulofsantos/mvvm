@@ -32,6 +32,13 @@ class IMCActivity : AppCompatActivity(), View.OnClickListener {
         if (view.id == R.id.btn_imc) {
             var altura = binding.editTextAltura.text.toString()
             var peso = binding.editTextPeso.text.toString()
+            var imc = imcViewModel.calculateIMC2(altura, peso)
+
+
+
+            var imcModel = IMCModel(peso, altura, imc)
+
+            imcViewModel.insertData(imcModel)
 
             if ((altura.isEmpty() || altura == null) || peso.isEmpty() || peso == null) {
                 Toast.makeText(applicationContext, "Preencher todos os campos!", Toast.LENGTH_SHORT).show()
@@ -41,7 +48,7 @@ class IMCActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    fun setObserve() {
+    private fun setObserve() {
         imcViewModel.imcReturn().observe(this, Observer {
             binding.textViewImc.text = it
         })

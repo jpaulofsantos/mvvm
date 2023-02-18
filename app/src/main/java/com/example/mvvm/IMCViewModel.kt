@@ -1,11 +1,15 @@
 package com.example.mvvm
 
+import android.app.Application
 import android.widget.Toast
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class IMCViewModel: ViewModel() {
+class IMCViewModel(application: Application) : AndroidViewModel(application) {
+
+    private val repository = IMCRepository.getInstance(application)
 
     private val imc = MutableLiveData<String>()
 
@@ -18,5 +22,16 @@ class IMCViewModel: ViewModel() {
         var alturaFloat = altura.toFloat() / 100
         var calculoIMC = pesoFloat / (alturaFloat * alturaFloat)
         imc.value = calculoIMC.toString()
+    }
+
+    fun calculateIMC2(altura:String, peso:String): String {
+        var pesoFloat = peso.toFloat()
+        var alturaFloat = altura.toFloat() / 100
+        var calculoIMC = pesoFloat / (alturaFloat * alturaFloat)
+        return calculoIMC.toString()
+    }
+
+    fun insertData(imcModel: IMCModel) {
+        repository.insertData(imcModel)
     }
 }
