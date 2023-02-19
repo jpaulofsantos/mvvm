@@ -7,6 +7,7 @@ import android.view.View.OnClickListener
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mvvm.databinding.ActivityImcactivityBinding
 
 class IMCActivity : AppCompatActivity(), View.OnClickListener {
@@ -14,6 +15,7 @@ class IMCActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityImcactivityBinding
 
     private lateinit var imcViewModel: IMCViewModel
+    private val adapter = IMCAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +24,12 @@ class IMCActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(binding.root)
 
         imcViewModel = ViewModelProvider(this).get(IMCViewModel::class.java)
+
+        //layout recycler
+        binding.recyclerImc.layoutManager = LinearLayoutManager(applicationContext)
+
+        //adapter recycler
+        binding.recyclerImc.adapter = adapter
 
         binding.btnImc.setOnClickListener(this)
 
@@ -49,7 +57,10 @@ class IMCActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun setObserve() {
         imcViewModel.listImc.observe(this, Observer {
-            val string = ""
+            adapter.updateImc(it)
+        })
+        imcViewModel.imcReturn().observe(this, Observer {
+            binding.textViewImc.text = it
         })
     }
 }

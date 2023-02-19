@@ -47,4 +47,25 @@
         android:layout_marginTop="40dp"
         />
 
+    <TextView
+        android:id="@+id/text_view_resultados"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Resultados:"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_view_imc"
+        android:layout_marginTop="40dp"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_imc"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/text_view_resultados"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:listitem="@layout/row_imc"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
