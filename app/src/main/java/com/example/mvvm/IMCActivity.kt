@@ -36,7 +36,7 @@ class IMCActivity : AppCompatActivity(), View.OnClickListener {
 
 
 
-            var imcModel = IMCModel(peso, altura, imc)
+            var imcModel = IMCModel(0, peso, altura, imc)
 
             imcViewModel.insertData(imcModel)
 

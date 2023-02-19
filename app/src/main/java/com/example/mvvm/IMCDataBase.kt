@@ -12,10 +12,11 @@ class IMCDataBase(context: Context): SQLiteOpenHelper(context, NAME, null, VERSI
     }
     
     override fun onCreate(db: SQLiteDatabase) {
-        db.execSQL("create table imc (id integer primary key autoincrement, peso text, altura text, imc text);")
+        db.execSQL("create table Imc (id integer primary key autoincrement, peso text, altura text, imc text);")
 
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+        
     }
 }

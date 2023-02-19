@@ -34,4 +34,17 @@ class IMCViewModel(application: Application) : AndroidViewModel(application) {
     fun insertData(imcModel: IMCModel) {
         repository.insertData(imcModel)
     }
+
+    fun updateData(imcModel: IMCModel) {
+        repository.updateData(imcModel)
+    }
+
+    fun deleteData(imcId: Int) {
+        repository.deleteData(imcId)
+    }
+
+    fun selectAllData() {
+        repository.selectAllData()
+    }
+
 }
