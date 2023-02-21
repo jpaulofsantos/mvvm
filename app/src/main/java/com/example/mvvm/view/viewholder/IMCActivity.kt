@@ -41,11 +41,15 @@ class IMCActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             override fun onDelete(id: Int) {
+                imcViewModel.deleteData(id)
+                imcViewModel.selectAllData()
 
             }
         }
 
         adapter.getListener(listener)
+
+        imcViewModel.selectAllData()
 
         binding.btnImc.setOnClickListener(this)
 
