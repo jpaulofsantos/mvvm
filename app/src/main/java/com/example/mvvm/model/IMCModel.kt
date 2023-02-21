@@ -1,4 +1,4 @@
-package com.example.mvvm
+package com.example.mvvm.model
 
 data class IMCModel (
     val id: Int,

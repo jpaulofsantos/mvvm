@@ -1,4 +1,4 @@
-package com.example.mvvm
+package com.example.mvvm.repository
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase

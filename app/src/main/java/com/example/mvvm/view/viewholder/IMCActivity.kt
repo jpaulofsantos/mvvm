@@ -1,14 +1,18 @@
-package com.example.mvvm
+package com.example.mvvm.view.viewholder
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.view.View.OnClickListener
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.mvvm.R
 import com.example.mvvm.databinding.ActivityImcactivityBinding
+import com.example.mvvm.model.IMCModel
+import com.example.mvvm.view.adapter.IMCAdapter
+import com.example.mvvm.view.viewmodel.IMCViewModel
+import com.example.mvvm.view.listener.OnIMCListener
 
 class IMCActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -30,6 +34,18 @@ class IMCActivity : AppCompatActivity(), View.OnClickListener {
 
         //adapter recycler
         binding.recyclerImc.adapter = adapter
+
+        val listener = object: OnIMCListener {
+            override fun onClick(id: Int) {
+                Toast.makeText(applicationContext, "Clicando no id: $id", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onDelete(id: Int) {
+
+            }
+        }
+
+        adapter.getListener(listener)
 
         binding.btnImc.setOnClickListener(this)
 

@@ -20,7 +20,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".IMCActivity"
+            android:name=".view.viewholder.IMCActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

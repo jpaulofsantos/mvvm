@@ -1,4 +1,4 @@
-package com.example.mvvm
+package com.example.mvvm.constants
 
 class IMCBaseConstants private constructor() {
     object Imc {

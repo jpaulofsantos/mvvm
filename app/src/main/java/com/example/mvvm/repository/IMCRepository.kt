@@ -1,7 +1,9 @@
-package com.example.mvvm
+package com.example.mvvm.repository
 
 import android.content.ContentValues
 import android.content.Context
+import com.example.mvvm.constants.IMCBaseConstants
+import com.example.mvvm.model.IMCModel
 
 class IMCRepository private constructor(context: Context){
 
@@ -11,7 +13,7 @@ class IMCRepository private constructor(context: Context){
         private lateinit var repository: IMCRepository
 
         fun getInstance(context: Context): IMCRepository {
-            if(!::repository.isInitialized) {
+            if(!Companion::repository.isInitialized) {
                 repository = IMCRepository(context)
             }
             return repository
@@ -87,7 +89,8 @@ class IMCRepository private constructor(context: Context){
             )
 
             //método query retorna um cursor (aponta para o começo da tabela)
-            val cursor = db.query(IMCBaseConstants.Imc.TABLE_NAME, columns, null, null,
+            val cursor = db.query(
+                IMCBaseConstants.Imc.TABLE_NAME, columns, null, null,
                 null, null, null)
 
             if (cursor != null && cursor.count > 0) {
