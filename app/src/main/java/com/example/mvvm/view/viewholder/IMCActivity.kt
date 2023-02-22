@@ -1,5 +1,6 @@
 package com.example.mvvm.view.viewholder
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -8,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mvvm.R
+import com.example.mvvm.constants.IMCBaseConstants
 import com.example.mvvm.databinding.ActivityImcactivityBinding
 import com.example.mvvm.model.IMCModel
 import com.example.mvvm.view.adapter.IMCAdapter
@@ -20,6 +22,7 @@ class IMCActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var imcViewModel: IMCViewModel
     private val adapter = IMCAdapter()
+    private var imcId = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +40,13 @@ class IMCActivity : AppCompatActivity(), View.OnClickListener {
 
         val listener = object: OnIMCListener {
             override fun onClick(id: Int) {
-                Toast.makeText(applicationContext, "Clicando no id: $id", Toast.LENGTH_SHORT).show()
+                val intent = Intent(applicationContext, IMCActivity::class.java)
+
+                val bundle = Bundle()
+                bundle.putInt(IMCBaseConstants.Imc.ID, id)
+                intent.putExtras(bundle)
+
+                startActivity(intent)
             }
 
             override fun onDelete(id: Int) {
@@ -49,11 +58,16 @@ class IMCActivity : AppCompatActivity(), View.OnClickListener {
 
         adapter.getListener(listener)
 
-        imcViewModel.selectAllData()
-
         binding.btnImc.setOnClickListener(this)
 
         setObserve()
+
+        loadData()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        imcViewModel.selectAllData()
     }
 
     override fun onClick(view: View) {
@@ -62,9 +76,13 @@ class IMCActivity : AppCompatActivity(), View.OnClickListener {
             var peso = binding.editTextPeso.text.toString()
             var imc = imcViewModel.calculateIMC2(altura, peso)
 
-            var imcModel = IMCModel(0, peso, altura, imc)
+            var imcModel = IMCModel(imcId, peso, altura, imc)
 
-            imcViewModel.insertData(imcModel)
+            if (imcModel.id == 0) {
+                imcViewModel.insertData(imcModel)
+            } else {
+                imcViewModel.updateData(imcModel)
+            }
             imcViewModel.selectAllData()
 
             if ((altura.isEmpty() || altura == null) || peso.isEmpty() || peso == null) {
@@ -75,12 +93,28 @@ class IMCActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    //traz os dados referente ao registro selecionado
+    private fun loadData() {
+        val bundle = intent.extras
+        if (bundle != null) {
+            imcId = bundle.getInt(IMCBaseConstants.Imc.ID)
+            imcViewModel.getIMC(imcId)
+        }
+    }
+
     private fun setObserve() {
         imcViewModel.listImc.observe(this, Observer {
             adapter.updateImc(it)
         })
         imcViewModel.imcReturn().observe(this, Observer {
             binding.textViewImc.text = it
+        })
+
+        //observe na variável imcNew que é alterada pelo getImc. que é chamado pelo método loadData()
+        imcViewModel.imcNew.observe(this, Observer {
+            binding.btnImc.text = "Editar"
+            binding.editTextPeso.setText(it.peso)
+            binding.editTextAltura.setText(it.altura)
         })
     }
 }

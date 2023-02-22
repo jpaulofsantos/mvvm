@@ -21,6 +21,9 @@ class IMCViewModel(application: Application) : AndroidViewModel(application) {
 
     val listImc: LiveData<List<IMCModel>> = listaImc
 
+    private val imcModel = MutableLiveData<IMCModel>()
+    val imcNew: LiveData<IMCModel> = imcModel
+
     fun calculateIMC(altura:String, peso:String) {
         var pesoFloat = peso.toFloat()
         var alturaFloat = altura.toFloat() / 100
@@ -49,5 +52,9 @@ class IMCViewModel(application: Application) : AndroidViewModel(application) {
 
     fun selectAllData() {
         listaImc.value = repository.selectAllData()
+    }
+
+    fun getIMC(id: Int) {
+        imcModel.value = repository.selectImc(id)
     }
 }

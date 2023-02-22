@@ -114,4 +114,44 @@ class IMCRepository private constructor(context: Context){
         }
         return imcList
     }
+
+    fun selectImc(id: Int): IMCModel? {
+
+        var imcModel: IMCModel? = null
+
+        try {
+
+            val db = imcDataBase.readableDatabase
+            val columns = arrayOf(
+                IMCBaseConstants.Imc.COLUMNS.ID,
+                IMCBaseConstants.Imc.COLUMNS.PESO,
+                IMCBaseConstants.Imc.COLUMNS.ALTURA,
+                IMCBaseConstants.Imc.COLUMNS.IMC
+            )
+            val selection = IMCBaseConstants.Imc.COLUMNS.ID + " = ?"
+            val args = arrayOf(id.toString())
+
+            //método query retorna um cursor (aponta para o começo da tabela)
+            val cursor = db.query(IMCBaseConstants.Imc.TABLE_NAME, columns, selection, args,
+                null, null, null)
+
+            if (cursor != null && cursor.count > 0) {
+                while (cursor.moveToNext()) {
+                    //pegando o id atraves do cursor, indo ate a coluna ID
+                    val id = cursor.getInt(cursor.getColumnIndex(IMCBaseConstants.Imc.COLUMNS.ID))
+                    val peso = cursor.getString(cursor.getColumnIndex(IMCBaseConstants.Imc.COLUMNS.PESO))
+                    val altura = cursor.getString(cursor.getColumnIndex(IMCBaseConstants.Imc.COLUMNS.ALTURA))
+                    var imc = cursor.getString(cursor.getColumnIndex(IMCBaseConstants.Imc.COLUMNS.IMC))
+
+                    //presence true = 1 e false para outros valores
+                    imcModel = IMCModel(id, peso, altura, imc)
+                }
+            }
+            cursor.close()
+
+        } catch (e: java.lang.Exception) {
+            return imcModel
+        }
+        return imcModel
+    }
 }
